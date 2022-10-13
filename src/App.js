@@ -1,7 +1,14 @@
-function App() {
-  return <div>
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Main from "./components/Main";
 
-  </div>
+function App() {
+  return <>
+    <Header />
+    <Routes>
+      <Route path="/" element={<Main />} />
+    </Routes>
+  </>
     ;
 }
 
