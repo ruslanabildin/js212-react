@@ -23,6 +23,10 @@ const initialState = {
             { date: '2022-10-09', done: false },
             { date: '2022-10-05', done: true, grade: 10 }
         ]
+    },
+    _currentUser: {
+        isAuth: false,
+        currentUserName: undefined,
     }
 }
 
