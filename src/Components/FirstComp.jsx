@@ -1,7 +1,10 @@
 import React from 'react'
-import './style.scc'
-export default function FirstComp() {
+import './style.css'
+export default function FirstComp({post}) {
   return (
-    <div>FirstComp</div>
+    <div className='post'>
+      <h2>Заголовок {post.id} : {post.title}</h2>
+      <p>{post.body}</p>
+    </div>
   )
 }
