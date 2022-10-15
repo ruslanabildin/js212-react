@@ -1,5 +1,5 @@
 import React from 'react'
-import './style.scc'
+import './style.css'
 export default function SecondComp() {
   return (
     <div>SecondComp</div>
