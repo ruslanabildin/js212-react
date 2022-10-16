@@ -8,39 +8,27 @@ import { fetchPosts } from './Store'
 function App() {
   const dispatch = useDispatch();
   const posts = useSelector(state=>state.posts.posts)
-  let [arr,getArr] =  useState([])
-  let [page,getpage] = useState(10)
-  let [page2,getpage2] = useState(0)
+  let [page,getpage] = useState([0,10])
   let numbers = [1,2,3,4,5,6,7,8,9,10]
-  let fetchPost = (page,page2)=>{
-      dispatch(fetchPosts())
-      let newArr = []
-      if(posts.length!==0){
-        for(let i=page2;i<page;i++){
-          newArr.push(posts[i])
-          getArr(newArr)
-      }
-     }
-  }
   let getPage = (item)=>{
     let nePage = 10*item
     let firstNum = nePage - 10
-    getpage(nePage)
-    getpage2(firstNum)
-    fetchPost(page,page2)
+    let arr = []
+    arr.push(firstNum)
+    arr.push(nePage)
+    getpage(arr)
+    dispatch(fetchPosts(page))
   }
   useEffect(()=>{
-    fetchPost(page,page2)
+    dispatch(fetchPosts(page))
   },[page])
-  console.log(posts);
   return (
     <div className="App">
       <h1>Список постов</h1>
-      <button onClick={()=>{ getPage(1)}}>Загрузить</button>
-      {arr.map((item,i)=>{
+      {posts.map((item,i)=>{
            return <FirstComp key={i} post={item}></FirstComp>
       })}
-      {numbers.map((item)=><button key={item} onClick={()=>{getPage(item)}} style={{backgroundColor:(item===page/10)?'green':'white'}}>{item}</button>)}
+      {numbers.map((item)=><button key={item} onClick={()=>{getPage(item)}} style={{backgroundColor:(item===page[1]/10)?'green':'white'}}>{item}</button>)}
      <SecondComp></SecondComp>
     </div>
   );
