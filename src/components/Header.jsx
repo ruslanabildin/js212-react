@@ -1,6 +1,5 @@
 import { Container, Link } from '@mui/material'
 import React from 'react'
-import './style.css'
 import { useSelector } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -21,8 +20,7 @@ export default function Header() {
                     component={RouterLink}>Home</Link>
             </div>
             {isAuth &&
-                <nav>
-                    <div className='hidden-block'>
+                <nav style={{ display: 'flex', gap: '5px' }}>
                     <Link
                         to='/student/schedule'
                         underline='hover'
@@ -53,7 +51,6 @@ export default function Header() {
                         component={RouterLink}>
                         Моя группа
                     </Link>
-                    </div>
                 </nav>
             }
         </Container>

@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./Components/Header";
-import Main from "./Components/Main";
-import Progress from './Components/Progress'
-import Statistics from './Components/Statistics'
-import HomeWork from './Components/HomeWork'
-import MyGroup from './Components/MyGroup'
-import Shedule from "./Components/Shedule";
+import Header from "./components/Header";
+import Main from "./components/Main";
+import Progress from './components/Progress';
+import Statistics from './components/Statistics';
+import HomeWork from './components/HomeWork';
+import MyGroup from './components/MyGroup';
+import Shedule from "./components/Shedule";
 
 function App() {
   return <>
