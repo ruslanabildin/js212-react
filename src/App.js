@@ -6,8 +6,19 @@ import Statistics from './components/Statistics';
 import HomeWork from './components/HomeWork';
 import MyGroup from './components/MyGroup';
 import Shedule from "./components/Shedule";
+import { useEffect } from "react";
+import { getCookie } from "react-use-cookie";
+import { useDispatch } from "react-redux";
+import { cookieAuth } from "./redux/students";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    let userName = getCookie('username');
+    if (userName !== '') {
+      dispatch(cookieAuth(userName));
+    }
+  }, [])
   return <>
     <Header />
     <Routes>

@@ -48,10 +48,14 @@ export const studentsSlice = createSlice({
                 state.currentUser.isAuth = true;
                 state.currentUser.currentUserName = username;
             }
+        },
+        cookieAuth: (state, { payload }) => {
+            state.currentUser.isAuth = true;
+            state.currentUser.currentUserName = payload;
         }
     }
 })
 
-export const { signIn } = studentsSlice.actions;
+export const { signIn, cookieAuth } = studentsSlice.actions;
 
 export default studentsSlice.reducer;
