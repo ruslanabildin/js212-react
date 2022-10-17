@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userList: {
-    alexlee: {
-      name: "Alex Lee",
+    teacher: {
+      name: "teacher 1",
       group: "JS1",
       password: "12345",
       schedule: [
@@ -16,14 +16,6 @@ const initialState = {
           title: "React",
         },
       ],
-      grades: [
-        { date: "2022-10-09", lesson: "React", value: 12 },
-        { date: "2022-10-05", lesson: "React", value: 10 },
-      ],
-      homeworks: [
-        { date: "2022-10-09", done: false },
-        { date: "2022-10-05", done: true, grade: 10 },
-      ],
     },
   },
   currentUser: {
@@ -32,11 +24,11 @@ const initialState = {
   },
 };
 
-export const studentsSlice = createSlice({
-  name: "students",
+export const teachersSlice = createSlice({
+  name: "teachers",
   initialState,
   reducers: {
-    signIn: (state, { payload }) => {
+    signIn2: (state, { payload }) => {
       const userList = state.userList;
       const { username, password } = payload;
       if (!userList[username]) {
@@ -49,13 +41,13 @@ export const studentsSlice = createSlice({
         state.currentUser.currentUserName = username;
       }
     },
-    cookieAuth: (state, { payload }) => {
+    cookieAuth2: (state, { payload }) => {
       state.currentUser.isAuth = true;
       state.currentUser.currentUserName = payload;
     },
   },
 });
 
-export const { signIn, cookieAuth } = studentsSlice.actions;
+export const { signIn2, cookieAuth2 } = teachersSlice.actions;
 
-export default studentsSlice.reducer;
+export default teachersSlice.reducer;
