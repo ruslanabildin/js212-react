@@ -40,9 +40,11 @@ export const studentsSlice = createSlice({
             const userList = state.userList;
             const { username, password } = payload;
             if (!userList[username]) {
+                console.log('net');
                 return;
             }
             if (userList[username].password === password) {
+                console.log('da');
                 state.currentUser.isAuth = true;
                 state.currentUser.currentUserName = username;
             }
