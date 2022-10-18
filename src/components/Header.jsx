@@ -1,12 +1,14 @@
-import { Container, Link } from '@mui/material'
+import { Button, Container, Link } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { setCookie } from 'react-use-cookie';
 
 
 
 export default function Header() {
     const isAuth = useSelector(state => state.students.currentUser.isAuth);
+    const navigate = useNavigate();
     return <header>
         <Container sx={{
             display: 'flex',
@@ -20,7 +22,7 @@ export default function Header() {
                     component={RouterLink}>Home</Link>
             </div>
             {isAuth &&
-                <nav style={{ display: 'flex', gap: '5px' }}>
+                <nav style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
                     <Link
                         to='/student/schedule'
                         underline='hover'
@@ -53,6 +55,15 @@ export default function Header() {
                     </Link>
                 </nav>
             }
+            <Button onClick={() => {
+                setCookie('username', '', {
+                    days: -1
+                });
+                setCookie('username_teacher', '', {
+                    days: -1
+                });
+                navigate('/')
+            }} variant="text">Выйти</Button>
         </Container>
     </header>
 }

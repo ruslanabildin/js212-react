@@ -4,7 +4,7 @@ const initialState = {
   userList: {
     teacher: {
       name: "teacher 1",
-      group: "JS1",
+      group: ["JS1"],
       password: "12345",
       schedule: [
         {
@@ -28,7 +28,7 @@ export const teachersSlice = createSlice({
   name: "teachers",
   initialState,
   reducers: {
-    signIn2: (state, { payload }) => {
+    signInTeacher: (state, { payload }) => {
       const userList = state.userList;
       const { username, password } = payload;
       if (!userList[username]) {
@@ -41,13 +41,13 @@ export const teachersSlice = createSlice({
         state.currentUser.currentUserName = username;
       }
     },
-    cookieAuth2: (state, { payload }) => {
+    cookieAuthTeacher: (state, { payload }) => {
       state.currentUser.isAuth = true;
       state.currentUser.currentUserName = payload;
     },
   },
 });
 
-export const { signIn2, cookieAuth2 } = teachersSlice.actions;
+export const { signInTeacher, cookieAuthTeacher } = teachersSlice.actions;
 
 export default teachersSlice.reducer;

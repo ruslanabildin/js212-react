@@ -1,14 +1,18 @@
 import { Button, Container, Stack, TextField, List, ListItem, Link } from '@mui/material'
 import React, { useEffect } from 'react'
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../redux/students';
-import { signIn2 } from '../redux/teachers';
+import { signInTeacher } from '../redux/teachers';
 import { getCookie, setCookie } from 'react-use-cookie';
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 export default function Main() {
     const isAuth = useSelector(state => state.students.currentUser.isAuth);
     const isAuthTeacher = useSelector(state => state.teachers.currentUser.isAuth);
+    const studentsList = useSelector(state => state.students.userList);
+    const teacherList = useSelector(state => state.teachers.userList);
+
     const currentUserName = useSelector(
         state => state.students.currentUser.currentUserName);
     const currentUserNameTeacher = useSelector(
@@ -22,36 +26,38 @@ export default function Main() {
         let username = usernameInput.value;
         let password = passwordInput.value;
 
-        dispatch(signIn({ username, password }));
-    }
-    const authUser2 = (event) => {
-        event.preventDefault();
-        let form = event.target;
-        let usernameInput = form.elements.login;
-        let passwordInput = form.elements.password;
-        let username = usernameInput.value;
-        let password = passwordInput.value;
+        if (studentsList[username]) {
+            dispatch(signIn({ username, password }));
+        } else
+            if (teacherList[username]) {
+                dispatch(signInTeacher({ username, password }))
+            } else {
+                NotificationManager.error('Ошибка', 'Пользователь не найден', 5000)
+            }
 
-        dispatch(signIn2({ username, password }));
     }
-
+    const navigate = useNavigate();
     useEffect(() => {
         let cookie = getCookie('username');
-        let cookie2 = getCookie('username');
         if (isAuth && cookie === '') {
             setCookie('username', currentUserName, {
                 days: 1
             })
         }
-        else if (isAuthTeacher && cookie2 === '') {
-            setCookie('teacherName', currentUserNameTeacher, {
+
+        let cookieTeacher = getCookie('username_teacher');
+        if (isAuthTeacher) {
+            navigate('teacher/homework')
+        }
+        if (isAuthTeacher && cookieTeacher === '') {
+            setCookie('username_teacher', currentUserNameTeacher, {
                 days: 1
             })
         }
-    }, [isAuth, isAuthTeacher])
+    }, [isAuth, isAuthTeacher, navigate, currentUserName, currentUserNameTeacher])
     return <main>
         <Container>
-            {!isAuth &&
+            {!(isAuth || isAuthTeacher) &&
                 <form onSubmit={authUser}>
                     <Stack sx={{
                         width: 450,
@@ -65,18 +71,6 @@ export default function Main() {
                     </Stack>
                 </form>
             }
-            {!isAuthTeacher && <form onSubmit={authUser2}>
-                    <Stack sx={{
-                        width: 450,
-                        mx: 'auto'
-                    }}
-                        gap={2}
-                    >
-                        <TextField label='Логин' name='login' />
-                        <TextField label='Пароль' type='password' name='password' />
-                        <Button type='submit' variant='contained'>Войти</Button>
-                    </Stack>
-                </form>}
             {isAuthTeacher && <List sx={{ width: 450, mx: 'auto', mt: '20px' }}>
                 <ListItem>
                     <Link
@@ -154,5 +148,6 @@ export default function Main() {
                 </ListItem>
             </List>}
         </Container>
+        <NotificationContainer />
     </main>
 }
